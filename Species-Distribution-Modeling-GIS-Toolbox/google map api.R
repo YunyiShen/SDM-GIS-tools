@@ -36,11 +36,12 @@ for(i in 1:nn){
   if(is.na(oldver.point$lat[i])){
     namecoding=catUTF8(oldver.point$oldver.point.char[i])
     geo=tryCatch(geoCode(revUTF8(namecoding)),
-                 error=function(e){c(NA,NA,NA,NA)})
+                 error=function(e){c(NA,NA,"err",NA)})
     
     
     lattemp=geo[1]
     longtemp=geo[2]
+	errlog = as.character( geo[3])
     googlep=geo[4]
     if(!is.na(lattemp)){
       oldver.point$lat[i]=lattemp
