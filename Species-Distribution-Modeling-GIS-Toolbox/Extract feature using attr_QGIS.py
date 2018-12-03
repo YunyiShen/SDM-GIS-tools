@@ -2,7 +2,7 @@
 import csv
 
 
-#dirtosave = "E:/UW Lab jobs/7. Elevation adaption of Pheasants/IUCNbirds/Mitogenomespp/"
+dirtosave = "E:/UW Lab jobs/7. Elevation adaption of Pheasants/IUCNbirds/Mitogenomespp/"
 #birds_layer = QgsVectorLayer("E:/UW Lab jobs/7. Elevation adaption of Pheasants/IUCNbirds/IUCNbirds.shp", "IUCN_birds", "ogr")
 #if not birds_layer.isValid:
 #    print("failed to load")
@@ -20,14 +20,8 @@ with open('E:/UW Lab jobs/7. Elevation adaption of Pheasants/IUCNbirds/Spplist_c
         it = birds.getFeatures( QgsFeatureRequest( expr ) )
         ids = [i.id() for i in it]
         print(ids)
-        birds.setSelectedFeatures( ids )
-        res = QgsVectorFileWriter.writeAsVectorFormat( birds,
-                dirtosave + spp + ".shp",
-                'System',
-                None, #crs
-                'ESRI Shapefile',
-                True #onlySelected
-                )
+        birds.selectByIds( ids )
+        res = QgsVectorFileWriter.writeAsVectorFormat(birds, dirtosave + spp + ".shp", "utf-8", birds.crs(), "ESRI Shapefile", onlySelected=True)
         if res != QgsVectorFileWriter.NoError:
             print ('writing Error number:')
         else:
